@@ -4,3 +4,5 @@ declare module 'ember-url-hash-polyfill/templates/*' {
   const tmpl: TemplateFactory;
   export default tmpl;
 }
+
+type RouterArgs = object[];

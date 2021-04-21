@@ -6,18 +6,18 @@ module.exports = async function () {
   return {
     scenarios: [
       {
-        name: 'ember-lts-3.16',
+        name: 'ember-3.25',
         npm: {
           devDependencies: {
-            'ember-source': '~3.16.0',
+            'ember-source': '~3.25.0',
           },
         },
       },
       {
-        name: 'ember-lts-3.20',
+        name: 'ember-3.20',
         npm: {
           devDependencies: {
-            'ember-source': '~3.20.5',
+            'ember-source': '~3.26.0',
           },
         },
       },
@@ -46,30 +46,12 @@ module.exports = async function () {
         },
       },
       {
-        name: 'ember-default-with-jquery',
-        env: {
-          EMBER_OPTIONAL_FEATURES: JSON.stringify({
-            'jquery-integration': true,
-          }),
-        },
+        name: 'embroider',
         npm: {
           devDependencies: {
-            '@ember/jquery': '^1.1.0',
-          },
-        },
-      },
-      {
-        name: 'ember-classic',
-        env: {
-          EMBER_OPTIONAL_FEATURES: JSON.stringify({
-            'application-template-wrapper': true,
-            'default-async-observers': false,
-            'template-only-glimmer-components': false,
-          }),
-        },
-        npm: {
-          ember: {
-            edition: 'classic',
+            '@embroider/core': '*',
+            '@embroider/webpack': '*',
+            '@embroider/compat': '*',
           },
         },
       },
