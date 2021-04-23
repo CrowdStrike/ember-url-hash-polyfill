@@ -1,38 +1,63 @@
 ember-url-hash-polyfill
 ==============================================================================
 
-[Short description of the addon.]
+Navigating to URLs with `#hash-targets` in them is not supported by
+most single-page-app frameworks due to the async rendering nature of
+modern web apps -- the browser can't scroll to a `#hash-target` on
+page load / transition because the element hasn't rendered yet.
+There is an issue about this for Ember
+[here on the RFCs repo](https://github.com/emberjs/rfcs/issues/709).
 
+This addon provides a way to support the behavior that is in normally
+native to browsers where an anchor tag with `href="#some-id-or-name"`
+would scroll down the page when clicked.
 
-Compatibility
-------------------------------------------------------------------------------
-
-* Ember.js v3.16 or above
-* Ember CLI v2.13 or above
-* Node.js v10 or above
-
-
-Installation
-------------------------------------------------------------------------------
+## Installation
 
 ```
+yarn add ember-url-hash-polyfill
+# or
+npm install ember-url-hash-polyfill
+# or
 ember install ember-url-hash-polyfill
 ```
 
+## Compatibility
 
-Usage
-------------------------------------------------------------------------------
+* Ember.js v3.25 or above
+* Node.js v12 or above
 
-[Longer description of how to use the addon in apps.]
+## Usage
+
+To handle `/some-url/#hash-targets` on page load and after normal route transitions,
+```diff
+  // app/router.js
+
+  import { withHashSupport } from 'ember-url-hash-polyfill';
+
++ @withHashSupport
+  export default class Router extends EmberRouter {
+    location = config.locationType;
+    rootURL = config.rootURL;
+  }
+```
+
+Additionally, there is a `scrollToHash` helper if manual invocation is desired.
+
+```js
+import { scrollToHash } from 'ember-url-hash-polyfill';
+
+// ...
+
+scrollToHash('some-element-id-or-name');
+```
 
 
-Contributing
-------------------------------------------------------------------------------
+## Contributing
 
 See the [Contributing](CONTRIBUTING.md) guide for details.
 
 
-License
-------------------------------------------------------------------------------
+## License
 
 This project is licensed under the [MIT License](LICENSE.md).
