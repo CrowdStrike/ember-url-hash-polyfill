@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/CrowdStrike/ember-url-hash-polyfill/compare/v1.0.2...v1.0.3) (2021-04-28)
+
+
+### Bug Fixes
+
+* **deps:** update dependency ember-cli-babel to ^7.26.4 ([8cd88ec](https://github.com/CrowdStrike/ember-url-hash-polyfill/commit/8cd88ecfdcb59261fb476e3bece9aa4f34e8d741))
+
 ## [1.0.2](https://github.com/CrowdStrike/ember-url-hash-polyfill/compare/v1.0.1...v1.0.2) (2021-04-24)
 
 
