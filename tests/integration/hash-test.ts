@@ -1,5 +1,6 @@
 import Controller from '@ember/controller';
 import { assert as debugAssert } from '@ember/debug';
+import { inject as service } from '@ember/service';
 import { click, find, settled, visit } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
@@ -8,6 +9,8 @@ import { setupApplicationTest } from 'ember-qunit';
 import { scrollToHash, uiSettled } from 'ember-url-hash-polyfill';
 
 import { setupRouter } from './-helpers';
+
+import type RouterService from '@ember/routing/router-service';
 
 module('Hash', function (hooks) {
   setupApplicationTest(hooks);
@@ -141,6 +144,54 @@ module('Hash', function (hooks) {
         this.route('foo');
         this.route('bar');
       },
+    });
+
+    test('transitioning only via query params does not break things', async function (assert) {
+      class TestApplication extends Controller {
+        queryParams = ['test'];
+        test = false;
+      }
+      class Index extends Controller {
+        @service declare router: RouterService;
+      }
+
+      this.owner.register('controller:application', TestApplication);
+      this.owner.register('controller:index', Index);
+      this.owner.register(
+        'template:application',
+        hbs`
+          <LinkTo id='foo' @query={{hash test='foo'}}>foo</LinkTo>
+          <LinkTo id='default' @query={{hash test=false}}>default</LinkTo>
+          {{outlet}}
+                          `
+      );
+      this.owner.register(
+        'template:index',
+        hbs`
+          <out>
+            qp: {{this.router.currentRoute.queryParams.test}}
+          </out>
+        `
+      );
+
+      let router = this.owner.lookup('service:router');
+
+      await visit('/');
+      assert.dom('out').hasText('qp:');
+
+      await click('#foo');
+      assert.dom('out').hasText('qp: foo');
+
+      await click('#default');
+      assert.dom('out').hasText('qp:');
+
+      router.transitionTo({ queryParams: { test: 'foo' } });
+      await settled();
+      assert.dom('out').hasText('qp: foo');
+
+      router.transitionTo({ queryParams: { test: false } });
+      await settled();
+      assert.dom('out').hasText('qp: false');
     });
 
     test('cross-page-Llinks are properly scrolled to', async function (assert) {

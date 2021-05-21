@@ -11,7 +11,7 @@ import type RouterService from '@ember/routing/router-service';
 
 type Transition = Parameters<Route['beforeModel']>[0];
 type TransitionWithPrivateAPIs = Transition & {
-  intent: {
+  intent?: {
     url: string;
   };
 };
@@ -97,7 +97,11 @@ async function setupHashSupport(router: EmberRouter) {
   let routerService = owner.lookup('service:router') as RouterService;
 
   function handleHashIntent(transition: TransitionWithPrivateAPIs) {
-    let { url } = transition.intent;
+    let { url } = transition.intent || {};
+
+    if (!url) {
+      return;
+    }
 
     eventuallyTryScrollingTo(owner, url);
   }
