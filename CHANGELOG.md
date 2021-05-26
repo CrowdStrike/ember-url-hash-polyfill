@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/CrowdStrike/ember-url-hash-polyfill/compare/v1.0.4...v1.0.5) (2021-05-26)
+
+
+### Bug Fixes
+
+* intent is not always present, like when during qp-only transitions ([fbc7c3c](https://github.com/CrowdStrike/ember-url-hash-polyfill/commit/fbc7c3c66e9bcbc6eed382e7514bbe943af2ed7c))
+
 ## [1.0.4](https://github.com/CrowdStrike/ember-url-hash-polyfill/compare/v1.0.3...v1.0.4) (2021-05-18)
 
 
