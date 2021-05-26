@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/CrowdStrike/ember-url-hash-polyfill/compare/v1.0.5...v1.0.6) (2021-05-26)
+
+
+### Bug Fixes
+
+* **types:** withHashSupport needs explicit type ([5d447ef](https://github.com/CrowdStrike/ember-url-hash-polyfill/commit/5d447ef927cad29d97940355c2afd160d359a02a))
+
 ## [1.0.5](https://github.com/CrowdStrike/ember-url-hash-polyfill/compare/v1.0.4...v1.0.5) (2021-05-26)
 
 
