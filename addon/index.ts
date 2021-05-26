@@ -16,7 +16,7 @@ type TransitionWithPrivateAPIs = Transition & {
   };
 };
 
-export function withHashSupport(AppRouter: typeof EmberRouter) {
+export function withHashSupport(AppRouter: typeof EmberRouter): typeof AppRouter {
   return class RouterWithHashSupport extends AppRouter {
     constructor(...args: RouterArgs) {
       super(...args);
