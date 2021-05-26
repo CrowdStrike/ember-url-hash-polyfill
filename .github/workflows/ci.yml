@@ -74,7 +74,7 @@ jobs:
     name: "Compatibility"
     timeout-minutes: 7
     runs-on: ubuntu-latest
-    needs: tests
+    needs: [ tests, type_checking ]
 
     strategy:
       fail-fast: true
