@@ -13,6 +13,19 @@ env:
   CI: true
 
 jobs:
+  type_checking:
+    if: "! contains(toJSON(github.event.commits.*.message), '[skip ci]')"
+    name: Check Types
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: volta-cli/action@v1
+
+      - run: yarn install --frozen-lockfile
+      - run: yarn prepack
+
+
   tests:
     if: "! contains(toJSON(github.event.commits.*.message), '[skip ci]')"
     name: Base Tests
