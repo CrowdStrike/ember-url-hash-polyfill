@@ -1,3 +1,10 @@
+## [1.0.7](https://github.com/CrowdStrike/ember-url-hash-polyfill/compare/v1.0.6...v1.0.7) (2021-06-15)
+
+
+### Bug Fixes
+
+* **deps:** update dependency ember-cli-typescript to ^4.2.0 ([819a2c1](https://github.com/CrowdStrike/ember-url-hash-polyfill/commit/819a2c15cbd759f7835d46f90a1b7a97d35a0171))
+
 ## [1.0.6](https://github.com/CrowdStrike/ember-url-hash-polyfill/compare/v1.0.5...v1.0.6) (2021-05-26)
 
 
