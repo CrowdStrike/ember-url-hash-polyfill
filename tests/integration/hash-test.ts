@@ -11,6 +11,7 @@ import { mutationsSettled, scrollToHash } from 'ember-url-hash-polyfill';
 import { setupRouter } from './-helpers';
 
 import type RouterService from '@ember/routing/router-service';
+import { currentURL  } from '@ember/test-helpers';
 
 module('Hash', function (hooks) {
   setupApplicationTest(hooks);
@@ -37,6 +38,33 @@ module('Hash', function (hooks) {
       bounds.bottom <= parentBounds.bottom
     );
   }
+
+  module('initial page load', function (_hooks) {
+    test('waits for app to settle', async function (assert) {
+      this.owner.register(
+        'template:application',
+        hbs`
+          <h1 id="first">first!</h1>
+          <div style="height: 100vh;"></div>
+
+          <h1 id="second">second!</h1>
+          <div style="height: 100vh;"></div>
+        `
+      );
+
+      await visit('/#second');
+
+      let container = document.querySelector('#ember-testing-container');
+      let first = find('#first');
+      let second = find('#second');
+
+      debugAssert(`Expected all test elements to exist`, container && first && second);
+
+      assert.false(isVisible(first, container), 'first header is not visible');
+      assert.true(isVisible(second, container), 'second header is visible');
+      assert.equal(currentURL(), '/#second', 'initially, preserves hash');
+    });
+  });
 
   module('linking with hashes', function (_hooks) {
     test('in-page-links can be scrolled to with native anchors', async function (assert) {
