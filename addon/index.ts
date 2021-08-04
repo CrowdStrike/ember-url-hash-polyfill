@@ -127,7 +127,7 @@ async function eventuallyTryScrollingTo(owner: ApplicationInstance, url?: string
 
   if (!hash) return;
 
-  await waitForPromise(uiSettled(owner));
+  await waitForPromise(mutationsSettled(owner));
 
   if (isDestroyed(owner) || isDestroying(owner)) {
     return;
@@ -140,7 +140,7 @@ const TIME_SINCE_LAST_MUTATION = 500; // ms
 const MAX_TIMEOUT = 2000; // ms
 
 // exported for testing
-export async function uiSettled(owner: ApplicationInstance) {
+export async function mutationsSettled(owner: ApplicationInstance) {
   let timeStarted = new Date().getTime();
   let lastMutationAt = Infinity;
   let totalTimeWaited = 0;

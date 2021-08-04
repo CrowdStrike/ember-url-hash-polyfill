@@ -6,7 +6,7 @@ import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 
-import { scrollToHash, uiSettled } from 'ember-url-hash-polyfill';
+import { mutationsSettled, scrollToHash } from 'ember-url-hash-polyfill';
 
 import { setupRouter } from './-helpers';
 
@@ -223,14 +223,14 @@ module('Hash', function (hooks) {
       debugAssert(`Expected all test elements to exist`, container);
 
       router.transitionTo('/foo');
-      await uiSettled(this.owner);
+      await mutationsSettled(this.owner);
 
       assert.true(isVisible(find('#foo-first'), container), 'first header is visible');
       assert.false(isVisible(find('#foo-second'), container), 'second header is not visible');
       assert.equal(location.hash, '', 'initially, has no hash');
 
       router.transitionTo('/bar#bar-second');
-      await uiSettled(this.owner);
+      await mutationsSettled(this.owner);
       await scrollSettled();
 
       assert.false(isVisible(find('#bar-first'), container), 'first header is not visible');
@@ -238,7 +238,7 @@ module('Hash', function (hooks) {
       assert.equal(location.hash, '#bar-second', 'clicked hash appears in URL');
 
       router.transitionTo('/foo#foo-second');
-      await uiSettled(this.owner);
+      await mutationsSettled(this.owner);
       await scrollSettled();
 
       assert.false(isVisible(find('#foo-first'), container), 'first header is not visible');
