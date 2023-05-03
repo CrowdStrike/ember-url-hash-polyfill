@@ -1,7 +1,8 @@
 import Controller from '@ember/controller';
 import { assert as debugAssert } from '@ember/debug';
+import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
-import { click, find, settled, visit } from '@ember/test-helpers';
+import { click, find, settled, visit, waitUntil } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
@@ -245,6 +246,48 @@ module('Hash', function (hooks) {
       assert.true(isVisible(find('#foo-second'), container), 'second header is visible');
       assert.equal(location.hash, '#foo-second', 'clicked hash appears in URL');
     });
+  });
+
+  // https://github.com/CrowdStrike/ember-url-hash-polyfill/issues/118
+  test('transition to route with loading sub state is properly handled', async function (assert) {
+    this.owner.register(
+      'template:application',
+      hbs`
+        <h1 id="first">first!</h1>
+        <div style="height: 100vh;"></div>
+
+        <h1 id="second">second!</h1>
+        <div style="height: 100vh;"></div>
+      `
+    );
+
+    this.owner.register('template:application-loading', hbs`Loading...`);
+
+    class ApplicationRoute extends Route {
+      model() {
+        return new Promise(function (resolve) {
+          // Keep the timeout > to addon/index.ts "MAX_TIMEOUT" to make this test accurate
+          setTimeout(resolve, 4000);
+        });
+      }
+    }
+
+    this.owner.register('route:application', ApplicationRoute);
+
+    await visit('/#second');
+    await scrollSettled();
+
+    let container = document.querySelector('#ember-testing-container');
+    let first = find('#first');
+    let second = find('#second');
+
+    debugAssert(`Expected all test elements to exist`, container && first && second);
+
+    await waitUntil(() => isVisible(second, container as Element), {
+      timeoutMessage: 'second header is visible',
+    });
+
+    assert.equal(location.hash, '#second', 'hash appears in URL');
   });
 });
 
