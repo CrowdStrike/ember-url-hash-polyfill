@@ -25,7 +25,7 @@ ember install ember-url-hash-polyfill
 ## Compatibility
 
 * Ember.js v3.25 or above
-* Node.js v12 or above
+* Node.js v14 or above
 
 ## Usage
 
