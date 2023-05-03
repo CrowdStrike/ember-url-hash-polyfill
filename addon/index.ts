@@ -64,6 +64,10 @@ export function scrollToHash(hash: string) {
   }
 }
 
+function isLoadingRoute(routeName: string) {
+  return routeName.endsWith('_loading') || routeName.endsWith('.loading');
+}
+
 async function setupHashSupport(router: EmberRouter) {
   let initialURL: string | undefined;
   let owner = getOwner(router) as ApplicationInstance;
@@ -71,9 +75,9 @@ async function setupHashSupport(router: EmberRouter) {
   await new Promise((resolve) => {
     let interval = setInterval(() => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      let { currentURL } = router as any; /* Private API */
+      let { currentURL, currentRouteName } = router as any; /* Private API */
 
-      if (currentURL) {
+      if (currentURL && !isLoadingRoute(currentRouteName)) {
         clearInterval(interval);
         initialURL = currentURL;
         resolve(null);
