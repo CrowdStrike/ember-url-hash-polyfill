@@ -4,20 +4,28 @@ const getChannelURL = require('ember-source-channel-url');
 
 module.exports = async function () {
   return {
+    /**
+     * Related to https://github.com/emberjs/ember.js/issues/20418
+     * This prevent npm to break ember-canary & ember-beta :
+     * ember-resolver@10.0.0 have an optional peerDependency to ember-source ^4.8.3 & it make npm break (where yarn does not).
+     * Adding this option will prevent npm to complain about this
+     */
+    npmOptions: ['--legacy-peer-deps'],
+
     scenarios: [
       {
-        name: 'ember-3.25',
+        name: 'ember-4.4',
         npm: {
           devDependencies: {
-            'ember-source': '~3.25.0',
+            'ember-source': '~4.4.0',
           },
         },
       },
       {
-        name: 'ember-3.26',
+        name: 'ember-4.8',
         npm: {
           devDependencies: {
-            'ember-source': '~3.26.0',
+            'ember-source': '~4.8.0',
           },
         },
       },
@@ -34,6 +42,9 @@ module.exports = async function () {
         npm: {
           devDependencies: {
             'ember-source': await getChannelURL('beta'),
+            // https://github.com/emberjs/ember.js/issues/20418
+            'ember-resolver': '10.0.0',
+            '@ember/string': '3.0.1',
           },
         },
       },
@@ -42,6 +53,9 @@ module.exports = async function () {
         npm: {
           devDependencies: {
             'ember-source': await getChannelURL('canary'),
+            // https://github.com/emberjs/ember.js/issues/20418
+            'ember-resolver': '10.0.0',
+            '@ember/string': '3.0.1',
           },
         },
       },
