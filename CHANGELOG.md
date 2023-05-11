@@ -1,3 +1,10 @@
+## [1.0.10](https://github.com/CrowdStrike/ember-url-hash-polyfill/compare/v1.0.9...v1.0.10) (2023-05-11)
+
+
+### Bug Fixes
+
+* **deps:** update dependency ember-cli-htmlbars to ^6.2.0 ([e59aefe](https://github.com/CrowdStrike/ember-url-hash-polyfill/commit/e59aefe66db24d1e9116c978de9b02d2e865a29b))
+
 ## [1.0.9](https://github.com/CrowdStrike/ember-url-hash-polyfill/compare/v1.0.8...v1.0.9) (2023-05-10)
 
 
