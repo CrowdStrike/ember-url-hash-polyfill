@@ -131,6 +131,8 @@ async function eventuallyTryScrollingTo(owner: ApplicationInstance, url?: string
 
   if (!hash) return;
 
+  await waitForPromise(mutationsSettled(owner));
+
   await waitForPromise(uiSettled(owner));
 
   if (isDestroyed(owner) || isDestroying(owner)) {
@@ -140,11 +142,15 @@ async function eventuallyTryScrollingTo(owner: ApplicationInstance, url?: string
   scrollToHash(hash);
 }
 
+export async function uiSettled(owner: ApplicationInstance) {
+  // TODO: make sure that backburner queues are empty
+}
+
 const TIME_SINCE_LAST_MUTATION = 500; // ms
 const MAX_TIMEOUT = 2000; // ms
 
 // exported for testing
-export async function uiSettled(owner: ApplicationInstance) {
+export async function mutationsSettled(owner: ApplicationInstance) {
   let timeStarted = new Date().getTime();
   let lastMutationAt = Infinity;
   let totalTimeWaited = 0;
