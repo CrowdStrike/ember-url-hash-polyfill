@@ -1,7 +1,7 @@
 {
   "name": "ember-url-hash-polyfill",
   "version": "1.0.11",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "Support for in/inter page linking / scrolling with hashes in EmberJS.",
   "keywords": [
     "ember-addon"
   ],
